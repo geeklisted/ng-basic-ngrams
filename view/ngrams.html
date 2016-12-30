@@ -1,0 +1,64 @@
+<!-- A simple Angular application to take a input document and parse N-grams. -->
+<!-- For DarkStar Group coding exercise. -->
+<!-- @author Chris Simons -->
+<!doctype html>
+<html lang="en" ng-app="NGramsApp">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>DarkStar Group Coding Exercise (n-grams)</title>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body ng-controller="MainCtrl">
+        <div class="container">
+            <div class="page-header">
+                <h1>Fun with N-Grams (a coding exercise for DarkStar Group)</h1>
+                <h4>Chris Simons; April 2016</h4>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Simple form to allow text input and setting of max-length of N-grams to consider -->
+                    <form>
+                        <div class="form-group">
+                            <label for="frm_document">Input Text</label>
+                            <textarea class="form-control" id="frm_document" cols="100" rows="4" ng-model="textInput"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="frm_max_length">Max. Length ("M")</label>
+                            <input name="maxLength" ng-model="maxLength" class="form-control" id="frm_max_length" min="0">
+                        </div>
+                        <button class="btn btn-success" ng-click="processDocument()">Process N-grams</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- Repeat results per N-gram word length -->
+                <div class="col-md-12" ng-repeat="(m, segments) in results">
+                    <h3>Word-length of {{m}}</h3>
+                    <table class="table table-striped table-hover">
+                        <thead><th>Gram</th><th>Frequency</th></thead>
+                        <tbody>
+                        <tr ng-show="results" ng-repeat="ngram in segments.sortByAlpha() track by $index">
+                            <td>{{ngram.getWord()}}</td>
+                            <td>{{ngram.getOccurrences()}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular-route.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular-messages.min.js"></script>
+        <script src="../app/objects.js"></script>
+        <script src="../app/ngrams.js"></script>
+    </body>
+</html>
+
+
